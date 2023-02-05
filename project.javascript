@@ -1,4 +1,5 @@
 const API_KEY ='aa4235fef5f3bec41f4c3a995ee4e35d';
+
 const timeEl = document.getElementById('time');
 const dateEl = document.getElementById('date');
 const currentWeatherItemsEl = document.getElementById('current-weather-items');
@@ -6,10 +7,12 @@ const timezone = document.getElementById('time-zone');
 const countryEl = document.getElementById('country');
 const weatherForecastEl = document.getElementById('weather-forecast');
 const currentTempEl = document.getElementById('current-temp');
+
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
 'Saturday']
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
 'Oct', 'Nov', 'Dec'];
+
 setInterval(() => {
 const time = new Date();
 const month = time.getMonth();
@@ -30,20 +33,20 @@ navigator.geolocation.getCurrentPosition((success) => {
 console.log(success);
 let {latitude, longitude } = success.coords;
 console.log(latitude,longitude)
-// fetch('https://api.openweathermap.org/data/2.5/weather?
-lat=${latitude}&lon=${longitude}&appid=aa4235fef5f3bec41f4c3a995ee4e35d')
+// fetch('https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=aa4235fef5f3bec41f4c3a995ee4e35d`)
 // .then(res => res.json()).then(data => {
 // console.log(data)
 // showWeatherData(data);
 // })
-fetch(`https://api.openweathermap.org/data/2.5/forecast?
-lat=${latitude}&lon=${longitude}&appid=aa4235fef5f3bec41f4c3a995ee4e35d`)
- .then(res => res.json()).then(data => {
+fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=aa4235fef5f3bec41f4c3a995ee4e35d`)
+.then(res => res.json()).then(data => {
 console.log("*****",data)
 showWeatherData(data);
- }).catch(err=>console.log(err))
- })
+}).catch(err=>console.log(err))
+
+})
 }
+
 function showWeatherData (data){
 let {speed} = data.list[0].wind;
 console.log(speed);
@@ -67,6 +70,7 @@ currentWeatherItemsEl.innerHTML =
 </div>
 </div>
 `;
+
 let otherDayForcast = ''
 // console.log(data.list);
 const abc=data.list.slice(0,61);
@@ -80,8 +84,10 @@ otherDayForcast += `
 <div class="weather-forecast-item">
 <div class="day">${window.moment(day.dt*1000).format('ddd')}</div>
 <img
+
 src="http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png" alt="weather
 icon" class="w-icon">
+
 <div class="other">
 <div class="weather-item">
 <div>Temperature</div>
@@ -98,7 +104,8 @@ icon" class="w-icon">
 </div>
 </div>
 `
- }
- })
+}
+})
+
 weatherForecastEl.innerHTML = otherDayForcast;
 }
